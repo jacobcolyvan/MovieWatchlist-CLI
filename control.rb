@@ -17,27 +17,9 @@ else
 end
 
 
-
-
-def newMovie(title)
-    $moviesWatchlist.push(Movie.new(title))
-end
-
-def showMovies()
-    $moviesWatchlist.each do |movie|
-        puts movie.title
-    end
-end
-
-def showRandomMovie()
-    puts $moviesWatchlist[rand(0..$moviesWatchlist.length)].title
-end
-
 # Initialise 'TTY-Prompt'
 prompt = TTY::Prompt.new
-
 keep_program_running = true
-
 user_options = ["Show all movies", "Add movie to list", "Choose random movie", "Show movies of genre type",
                 "Show movies of rating equal or greater than your rating choice"]
 
