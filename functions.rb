@@ -1,1 +1,2 @@
-##write functions here
+require_relative './control.rb'
+require_relative './classes.rb'
