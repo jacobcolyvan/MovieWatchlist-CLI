@@ -1,8 +1,8 @@
 require_relative './control.rb'
 require_relative './classes.rb'
 
-def newMovie(title)
-    $moviesWatchlist.push(Movie.new(title))
+def newMovie(title, genre)
+    $moviesWatchlist.push(Movie.new(title, genre))
 end
 
 def showMovies()
@@ -11,6 +11,6 @@ def showMovies()
     end
 end
 
-def showRandomMovie()
-    puts $moviesWatchlist[rand(0..$moviesWatchlist.length)].titles
+def showRandomMovie() 
+    puts $moviesWatchlist[rand(0..$moviesWatchlist.length)].title
 end

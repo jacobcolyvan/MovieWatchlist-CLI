@@ -1,8 +1,5 @@
 require 'tty-prompt'
-
 require_relative './classes.rb'
-require_relative './functions.rb'
-
 
 
 ### Object marshaling for saving across terminal sessions
@@ -12,17 +9,31 @@ if File.file?('movies.dump')
     puts `clear`
 else 
     ### else creates a new array
-    $moviesWatchlist = [Movie.new("Spirited Away"), Movie.new("Godfather") ]
+    $moviesWatchlist = [Movie.new("Godfather", "Drama")]
     puts `clear`
 end
 
+
+
+def newMovie(title, genre)
+    $moviesWatchlist.push(Movie.new(title, genre))
+end
+
+def showMovies()
+    $moviesWatchlist.each do |movie|
+        puts movie.title
+    end
+end
+
+def showRandomMovie()
+    puts $moviesWatchlist[rand(0..$moviesWatchlist.length)].title
+end
 
 # Initialise 'TTY-Prompt'
 prompt = TTY::Prompt.new
 keep_program_running = true
 user_options = ["Show all movies", "Add movie to list", "Choose random movie", "Show movies of genre type",
                 "Show movies of rating equal or greater than your rating choice"]
-
 
 
 
@@ -35,7 +46,9 @@ while keep_program_running == true
         showMovies()
     # The user can add a new movie that isn't already on the movie list
     elsif user_choice == "Add movie to list"
-        newMovie(prompt.ask("What movie do you want to add? "))
+        title = prompt.ask("What movie do you want to add? ")
+        genre = prompt.ask("What genre is it? ")
+        newMovie(title, genre)
     # The user is given a random movie from the list of movies
     elsif user_choice == "Choose random movie"
         puts "The movie you should watch is:"
@@ -48,10 +61,8 @@ while keep_program_running == true
         # show movies categorised by rating code
     end
 
-    #asks user if they'd like to continue using the application
-    user_selection = prompt.yes?('Keep using movie helper?')
-    # if response is not yes, set keep_program_running boolean to false so while loop exits
-    if user_selection == false
+    # prompts user, if response is not yes, set keep_program_running boolean to false so while loop exits
+    if prompt.yes?('Keep using movie helper?') == false
         ### saves the array of movies to "movies.dump"
         File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($moviesWatchlist)) }
         keep_program_running = false
