@@ -1,10 +1,15 @@
 require 'tty-prompt'
 
-require_relative './functions.rb'
 require_relative './classes.rb'
+require_relative './functions.rb'
+
+$moviesWatchlist = []
+def newMovie(title)
+    $moviesWatchlist.push(Movie.new(title))
+end
 
 
-movieWatchlist = ["gugug"]
+
 
 # Initialise 'TTY-Prompt'
 prompt = TTY::Prompt.new
@@ -16,17 +21,20 @@ user_options = ["Show all movies", "Add movie to list", "Choose random movie", "
 
 
 
+
+
 # Control loop - program keeps asking us what function we'd like to use until we decide to exit
 while keep_program_running == true
     user_choice = prompt.select("Please choose which function you'd like to use:", user_options)
-
     # Show all movies in the list
     if user_choice == "Show all movies"
-        puts movieWatchlist
+        $moviesWatchlist.each do |movie|
+            puts movie.title
+        end
         # show movie code
     # The user can add a new movie that isn't already on the movie list
     elsif user_choice == "Add movie to list"
-        new_movie(prompt.ask("What movie would you like to add? "))
+        newMovie(prompt.ask("What movie do you want to add? "))
         # do movie adding to list code
     # The user is given a random movie from the list of movies
     elsif user_choice == "Choose random movie"
@@ -56,18 +64,18 @@ end
 
 
 
-##### >>> Object marshaling for saving across terminal sessions
-# if File.file?('movies.dump')
-#     ### loads movies array if it exists
-#     $ports = Marshal.load(File.read('user.dump'))
-#     puts `clear`
-#     # userMenu()
-# else 
-#     ### else creates a new array
-#     $movies = []
-#     puts `clear`
-#     newUser()
-# end
+# ##### >>> Object marshaling for saving across terminal sessions
+# # if File.file?('movies.dump')
+# #     ### loads movies array if it exists
+# #     $ports = Marshal.load(File.read('user.dump'))
+# #     puts `clear`
+# #     # userMenu()
+# # else 
+# #     ### else creates a new array
+# #     $movies = []
+# #     puts `clear`
+# #     newUser()
+# # end
 
-# # saves the array of movies to "movies.dump"
-# File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($movies)) }
+# # # saves the array of movies to "movies.dump"
+# # File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($movies)) }
