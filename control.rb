@@ -1,21 +1,20 @@
 require 'tty-prompt'
 
-class Movie
-    attr_accessor :title, :rating, :genre
-    def initalize(title, rating, genre)
-        @title = title
-        @rating = rating
-        @genre = genre
-    end
-end
+require_relative './functions.rb'
+require_relative './classes.rb'
+
+
+movieWatchlist = ["gugug"]
 
 # Initialise 'TTY-Prompt'
 prompt = TTY::Prompt.new
 
 keep_program_running = true
 
-user_options = ["Show all movies", "Add movie to watchlist", "Choose random movie", "Show movies of genre type",
+user_options = ["Show all movies", "Add movie to list", "Choose random movie", "Show movies of genre type",
                 "Show movies of rating equal or greater than your rating choice"]
+
+
 
 # Control loop - program keeps asking us what function we'd like to use until we decide to exit
 while keep_program_running == true
@@ -23,11 +22,11 @@ while keep_program_running == true
 
     # Show all movies in the list
     if user_choice == "Show all movies"
-        puts "List of Movies:"
+        puts movieWatchlist
         # show movie code
     # The user can add a new movie that isn't already on the movie list
-    elsif user_choice == "Add movie to watchlist"
-        puts "Please enter what movie:"
+    elsif user_choice == "Add movie to list"
+        new_movie(prompt.ask("What movie would you like to add? "))
         # do movie adding to list code
     # The user is given a random movie from the list of movies
     elsif user_choice == "Choose random movie"
@@ -49,6 +48,14 @@ while keep_program_running == true
     end
 
 end
+
+
+
+
+
+
+
+
 ##### >>> Object marshaling for saving across terminal sessions
 # if File.file?('movies.dump')
 #     ### loads movies array if it exists
