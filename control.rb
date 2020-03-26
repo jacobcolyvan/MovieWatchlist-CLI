@@ -14,7 +14,7 @@ prompt = TTY::Prompt.new
 
 keep_program_running = true
 
-user_options = ["Show all movies", "Add movie to list", "Choose random movie", "Show movies of genre type",
+user_options = ["Show all movies", "Add movie to watchlist", "Choose random movie", "Show movies of genre type",
                 "Show movies of rating equal or greater than your rating choice"]
 
 # Control loop - program keeps asking us what function we'd like to use until we decide to exit
@@ -26,7 +26,7 @@ while keep_program_running == true
         puts "List of Movies:"
         # show movie code
     # The user can add a new movie that isn't already on the movie list
-    elsif user_choice == "Add movie to list"
+    elsif user_choice == "Add movie to watchlist"
         puts "Please enter what movie:"
         # do movie adding to list code
     # The user is given a random movie from the list of movies
