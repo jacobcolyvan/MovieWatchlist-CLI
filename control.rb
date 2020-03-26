@@ -24,7 +24,7 @@ def showMovies()
     end
 end
 
-def showRandomMovie() 
+def showRandomMovie()
     puts $moviesWatchlist[rand(0..$moviesWatchlist.length)].title
 end
 
