@@ -39,11 +39,9 @@ while keep_program_running == true
     # The user can add a new movie that isn't already on the movie list
     elsif user_choice == "Add movie to list"
         newMovie(prompt.ask("What movie do you want to add? "))
-        # do movie adding to list code
     # The user is given a random movie from the list of movies
     elsif user_choice == "Choose random movie"
         puts "The movie you should watch is:"
-        # get random movie code
         showRandomMovie()
     elsif user_choice == "Show movies of genre type"
         puts "Please enter which genre of movies you'd like to choose from:"
