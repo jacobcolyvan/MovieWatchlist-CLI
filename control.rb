@@ -8,8 +8,15 @@ def newMovie(title)
     $moviesWatchlist.push(Movie.new(title))
 end
 
+def showMovies()
+    $moviesWatchlist.each do |movie|
+        puts movie.title
+    end
+end
 
-
+def showRandomMovie()
+    puts $moviesWatchlist[rand(0..$moviesWatchlist.length)]
+end
 
 # Initialise 'TTY-Prompt'
 prompt = TTY::Prompt.new
@@ -28,10 +35,7 @@ while keep_program_running == true
     user_choice = prompt.select("Please choose which function you'd like to use:", user_options)
     # Show all movies in the list
     if user_choice == "Show all movies"
-        $moviesWatchlist.each do |movie|
-            puts movie.title
-        end
-        # show movie code
+        showMovies()
     # The user can add a new movie that isn't already on the movie list
     elsif user_choice == "Add movie to list"
         newMovie(prompt.ask("What movie do you want to add? "))
@@ -40,6 +44,7 @@ while keep_program_running == true
     elsif user_choice == "Choose random movie"
         puts "The movie you should watch is:"
         # get random movie code
+        showRandomMovie()
     elsif user_choice == "Show movies of genre type"
         puts "Please enter which genre of movies you'd like to choose from:"
         # show movies of genre code
