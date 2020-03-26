@@ -3,7 +3,22 @@ require 'tty-prompt'
 require_relative './classes.rb'
 require_relative './functions.rb'
 
-$moviesWatchlist = []
+
+
+### Object marshaling for saving across terminal sessions
+if File.file?('movies.dump')
+    ### loads movies array if it exists
+    $moviesWatchlist = Marshal.load(File.read('movies.dump'))
+    puts `clear`
+else 
+    ### else creates a new array
+    $moviesWatchlist = [Movie.new("Spirited Away"), Movie.new("Godfather") ]
+    puts `clear`
+end
+
+
+
+
 def newMovie(title)
     $moviesWatchlist.push(Movie.new(title))
 end
@@ -55,30 +70,11 @@ while keep_program_running == true
     user_selection = prompt.yes?('Keep using movie helper?')
     # if response is not yes, set keep_program_running boolean to false so while loop exits
     if user_selection == false
+        ### saves the array of movies to "movies.dump"
+        File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($moviesWatchlist)) }
         keep_program_running = false
     end
 
 end
 
 
-
-
-
-
-
-
-# ##### >>> Object marshaling for saving across terminal sessions
-# # if File.file?('movies.dump')
-# #     ### loads movies array if it exists
-# #     $ports = Marshal.load(File.read('user.dump'))
-# #     puts `clear`
-# #     # userMenu()
-# # else 
-# #     ### else creates a new array
-# #     $movies = []
-# #     puts `clear`
-# #     newUser()
-# # end
-
-# # # saves the array of movies to "movies.dump"
-# # File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($movies)) }
