@@ -3,6 +3,6 @@ class Movie
     def initialize(title, genre="", rating="")
         @title = title
         @rating = rating
-        @genre = genre
+        @genre = genre.downcase
     end
 end

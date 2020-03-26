@@ -6,11 +6,10 @@ require_relative './classes.rb'
 if File.file?('movies.dump')
     ### loads movies array if it exists
     $moviesWatchlist = Marshal.load(File.read('movies.dump'))
-    puts `clear`
+    
 else 
     ### else creates a new array
     $moviesWatchlist = [Movie.new("Godfather", "Drama")]
-    puts `clear`
 end
 
 
@@ -25,20 +24,39 @@ def showMovies()
 end
 
 def showRandomMovie()
-    puts $moviesWatchlist[rand(0..$moviesWatchlist.length)].title
+    puts "The movie you should watch is: #{$moviesWatchlist[rand(0..$moviesWatchlist.length)].title}"
+end
+
+def genreList()
+    genreArray = []
+    $moviesWatchlist.each do |movie|
+        if !genreArray.include?(movie.genre)
+            genreArray.push(movie.genre)
+        end
+    end
+    genreChoice = prompt.select("Choose a genre", genreArray)
+    tempList = []
+    $moviesWatchlist.each do |movie|
+        if movie.genre == genrechoice
+            tempList.push(movie)
+        end
+    end
+
+    puts `clear`
+    puts "Here's ya list mate"
+    puts tempList
+    puts 
 end
 
 # Initialise 'TTY-Prompt'
 prompt = TTY::Prompt.new
 keep_program_running = true
-user_options = ["Show all movies", "Add movie to list", "Choose random movie", "Show movies of genre type",
-                "Show movies of rating equal or greater than your rating choice"]
-
-
+user_options = ["Show all movies", "Add movie to list", "Choose random movie", "Show movies of genre type"]
 
 
 # Control loop - program keeps asking us what function we'd like to use until we decide to exit
-while keep_program_running == true
+while keep_program_running
+    puts `clear`
     user_choice = prompt.select("Please choose which function you'd like to use:", user_options)
     # Show all movies in the list
     if user_choice == "Show all movies"
@@ -50,23 +68,16 @@ while keep_program_running == true
         newMovie(title, genre)
     # The user is given a random movie from the list of movies
     elsif user_choice == "Choose random movie"
-        puts "The movie you should watch is:"
         showRandomMovie()
     elsif user_choice == "Show movies of genre type"
-        puts "Please enter which genre of movies you'd like to choose from:"
-        # show movies of genre code
-    elsif user_choice == "Show movies of rating equal or greater than your rating choice"
-        puts "Please enter the rating to search from (0-10):"
-        # show movies categorised by rating code
+        genreList() 
     end
 
-    # prompts user, if response is not yes, set keep_program_running boolean to false so while loop exits
     if prompt.yes?('Keep using movie helper?') == false
         ### saves the array of movies to "movies.dump"
         File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($moviesWatchlist)) }
         keep_program_running = false
     end
-
 end
 
 
