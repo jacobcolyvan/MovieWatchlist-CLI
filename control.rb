@@ -1,14 +1,16 @@
-require 'tty-prompt'
-require 'tty-font'
+require "tty-prompt"
+require "tty-font"
 
-require_relative './classes.rb'
-require_relative './functions.rb'
+require_relative "./classes.rb"
+require_relative "./functions.rb"
 prompt = TTY::Prompt.new
 loadFile()
 # wantToWatch = []
 
-user_options = ["Show all movies", "Add movie to list", 
-                "Choose random movie", "Show movies of genre type"]
+user_options = [
+    "Show all movies", "Add movie to list", 
+    "Choose random movie", "Show movies of genre type"
+]
 
 
 # Control loop
@@ -16,6 +18,7 @@ keep_program_running = true
 while keep_program_running
     puts `clear`
     user_choice = prompt.select("Please choose which function you'd like to use:", user_options)
+    
     case user_choice
     when "Show all movies"
         showMovies()
@@ -30,7 +33,7 @@ while keep_program_running
     end
 
     puts 
-    if prompt.yes?('Keep using movie helper?') == false
+    if !prompt.yes?('Keep using movie helper?')
         ### saves the array of movies to "movies.dump"
         File.open('movies.dump', 'w') { |f| f.write(Marshal.dump($moviesWatchlist)) }
         keep_program_running = false

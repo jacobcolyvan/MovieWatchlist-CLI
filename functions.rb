@@ -53,6 +53,7 @@ def genreList()
             genreArray.push(movie.genre)
         end
     end
+    
     genreChoice = prompt.select("Choose a genre", genreArray)
     tempList = []
     $moviesWatchlist.each do |movie|
